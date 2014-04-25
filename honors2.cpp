@@ -83,12 +83,11 @@ struct Player{
 };//of Player
 
 struct Grid{
-  private:
+  public:
     vector< vector< Space* > > grid_;
     int const h_rows_ = 6;
     int const v_columns_ = 6;
     long const total_spaces_ = 36;
-  public:
 
 
     Grid(){
@@ -101,6 +100,9 @@ struct Grid{
         for (int v = 0; v < v_columns_; v++) {
           Space *set_space = new Space(h, v); // these arguments might be backwards
           row_h.push_back(set_space);
+          cout << set_space->h_index_ <<", " << set_space->v_index_;
+          cout << row_h[v]->h_index_ <<", " << row_h[v]->v_index_;
+          cout << endl;
 
           //middle cases
           if ((h != 0) && (h != 5) && (v != 5) && (v != 0)){
@@ -119,46 +121,42 @@ struct Grid{
           else{
             cout << "Corner Case "<< endl;
             if (h == 0 && v == 0){
-              set_space->left_ == nullptr;
-              set_space->down_ == nullptr;}
+              set_space->left_ = nullptr;
+              set_space->down_ = nullptr;}
             if (h == 0 && v == 5){
-              set_space->left_ == nullptr;
-              set_space->up_ == nullptr;}
+              set_space->left_ = nullptr;
+              set_space->up_ = nullptr;}
             if (h == 5 && v == 0){
-              set_space->right_ == nullptr;
-              set_space->up_ == nullptr;}
+              set_space->right_ = nullptr;
+              set_space->up_ = nullptr;}
             if (h == 5 && v == 5){
-              set_space->right_ == nullptr;
-              set_space->down_ == nullptr;}
+              set_space->right_ = nullptr;
+              set_space->down_ = nullptr;}
 
             //edge-only cases
             cout << "Edge Case "<< endl;
             if (h == 5) //top-edge
-              set_space->up_ == nullptr;
+              set_space->up_ = nullptr;
             if (h == 0) // bottom-edge
-              set_space->down_ == nullptr;
+              set_space->down_ = nullptr;
             if (v == 5) //right-side
-              set_space->right_ == nullptr;
+              set_space->right_ = nullptr;
             if (v == 0) //left-side
-              set_space->left_ == nullptr;
+              set_space->left_ = nullptr;
           }//of else
         }
       }
       cout << endl << endl << "Finished construction" << endl;
     }//of Grid constructor
 
-    //ostream& display(ostream& out){
-    void display(){
-      //out << "Printing contents of row: ";
-      cout << "Printing contents of row: ";
+    ostream& display(ostream& out){
+      out << "Printing contents of row: ";
       for (auto elem : grid_) {
-        //out << "Printing contents of row: ";
-        cout << "Printing contents of row: ";
+        out << "Printing contents of row: ";
         for (int v = 0; v < v_columns_; v++) {
           Space *print_space;
           print_space = (elem[v]); 
-          cout << print_space->v_index_ << ", " << print_space->h_index_ << endl;
-          //out << print_space->v_index_ << ", " << print_space->h_index_ << endl;
+          out << print_space->v_index_ << ", " << print_space->h_index_ << endl;
         }
       }
       //return out;
@@ -175,14 +173,23 @@ int main(){
   cout << "Making grid in main...." << endl;
   Grid g; 
   cout << "Printing grid in main...." << endl;
-  g.display();
+  //g.display(cout);
+
+  cout << "Printing contents of grid: ";
+  for (int h = 0; h < g.h_rows_; h++) {
+    cout << "Printing contents of row: ";
+    for (int v = 0; v < g.v_columns_; v++) {
+      cout << "woo" << endl;
+      cout << ((g.grid_[h])[v])->v_index_ << ", " << ((g.grid_[h])[v])->h_index_ << endl;
+    }
+  }
+  //return out;
+
   Die d; 
 
   cout << endl << "Rolling dice:" << endl;
   for (auto i = 0;i < 20; i++)
     d.roll(dre);
+
   return 0;
-
-
 }//of main
-
