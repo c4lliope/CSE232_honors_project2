@@ -95,7 +95,6 @@ struct Grid{
         // add a new row
         vector< Space* > row_h;
         row_h.clear();
-        grid_.push_back(row_h);
 
         for (int v = 0; v < v_columns_; v++) {
           Space *set_space = new Space(h, v); // these arguments might be backwards
@@ -145,18 +144,17 @@ struct Grid{
               set_space->left_ = nullptr;
           }//of else
         }
+        grid_.push_back(row_h);
       }
       cout << endl << endl << "Finished construction" << endl;
     }//of Grid constructor
 
     ostream& display(ostream& out){
-      out << "Printing contents of row: ";
-      for (auto elem : grid_) {
+      for (auto row : grid_) {
         out << "Printing contents of row: ";
-        for (int v = 0; v < v_columns_; v++) {
-          Space *print_space;
-          print_space = (elem[v]); 
-          out << print_space->v_index_ << ", " << print_space->h_index_ << endl;
+        out << "Row has " << row.size() << " elements" << endl;
+        for(auto space : row) {
+          out << space->v_index_ << ", " << space->h_index_ << endl;
         }
       }
       //return out;
@@ -175,15 +173,8 @@ int main(){
   cout << "Printing grid in main...." << endl;
   //g.display(cout);
 
-  cout << "Printing contents of grid: ";
-  for (int h = 0; h < g.h_rows_; h++) {
-    cout << "Printing contents of row: ";
-    for (int v = 0; v < g.v_columns_; v++) {
-      cout << "woo" << endl;
-      cout << ((g.grid_[h])[v])->v_index_ << ", " << ((g.grid_[h])[v])->h_index_ << endl;
-    }
-  }
-  //return out;
+  g.display(cout);
+  cout << endl;
 
   Die d; 
 
